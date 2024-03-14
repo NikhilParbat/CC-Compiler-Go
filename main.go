@@ -2,24 +2,34 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/NikhilParbat/CC-Compiler-Go/controllers"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
 
-	// CORS middleware
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://example.com"}           // Add allowed origins
-	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE"} // Add allowed HTTP methods
-	config.AllowHeaders = []string{"Origin"}                       // Add allowed headers
+	router.Use(func(c *gin.Context) {
+		// Set CORS headers
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Header("Access-Control-Allow-Headers", "Content-Type")
 
-	router.Use(cors.New(config))
+		// Handle preflight options request
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusOK)
+			return
+		}
 
-	router.POST("/execute", controllers.ExecuteCode)
+		c.Next()
+	})
+
+	router.POST("/execute", func(c *gin.Context) {
+		// Your actual request handling logic goes here
+		controllers.ExecuteCode(c)
+	})
 
 	fmt.Println("Server listening on port 5000...")
 	router.Run(":5000")

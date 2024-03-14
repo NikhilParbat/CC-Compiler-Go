@@ -25,14 +25,11 @@ func ExecuteCode(c *gin.Context) {
 	case "py":
 		cmd = exec.Command("python", "-")
 		cmd.Stdin = strings.NewReader(codeReq.Code)
-	case "c":
-		cmd = exec.Command("gcc", "-o", "temp", "-x", "c", "-")
+	case "go":
+		cmd = exec.Command("go", "run")
 		cmd.Stdin = strings.NewReader(codeReq.Code)
-		if err := cmd.Run(); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-		cmd = exec.Command("./temp")
+	case "rb":
+		cmd = exec.Command("ruby", "-e", codeReq.Code)
 	default:
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Unsupported language"})
 		return
