@@ -5,6 +5,7 @@ on:
     branches:
       - '*'
 
+
 jobs:
   test:
     name: Build and Push to AWS ECR
