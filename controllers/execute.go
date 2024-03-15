@@ -25,7 +25,6 @@ func ExecuteCode(c *gin.Context) {
 	case "py":
 		cmd = exec.Command("python", "-")
 		cmd.Stdin = strings.NewReader(codeReq.Code)
-
 	case "rb":
 		cmd = exec.Command("ruby", "-e", codeReq.Code)
 	case "php":
