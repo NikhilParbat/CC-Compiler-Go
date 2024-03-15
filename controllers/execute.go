@@ -25,11 +25,11 @@ func ExecuteCode(c *gin.Context) {
 	case "py":
 		cmd = exec.Command("python", "-")
 		cmd.Stdin = strings.NewReader(codeReq.Code)
-	case "go":
-		cmd = exec.Command("go", "run")
-		cmd.Stdin = strings.NewReader(codeReq.Code)
+
 	case "rb":
 		cmd = exec.Command("ruby", "-e", codeReq.Code)
+	case "php":
+		cmd = exec.Command("php", "-r", codeReq.Code)
 	default:
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Unsupported language"})
 		return
