@@ -1,5 +1,5 @@
 # Use the official Golang image
-FROM golang:1.22.0 AS builder
+FROM golang:latest AS builder
 
 # Set the current working directory inside the container
 WORKDIR /app
@@ -25,10 +25,6 @@ WORKDIR /app
 
 # Copy the binary from the builder stage to the final stage
 COPY --from=builder /app/CC-Compiler-Go .
-
-# Copy the models and controllers folders from the root directory
-COPY --from=builder /app/models /app/models
-COPY --from=builder /app/controllers /app/controllers
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
