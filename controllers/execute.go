@@ -23,11 +23,10 @@ func ExecuteCodeHandler(w http.ResponseWriter, r *http.Request) {
 	case "py":
 		cmd = exec.Command("python", "-")
 		cmd.Stdin = strings.NewReader(codeReq.Code)
-	case "go":
-		cmd = exec.Command("go", "run")
-		cmd.Stdin = strings.NewReader(codeReq.Code)
 	case "rb":
 		cmd = exec.Command("ruby", "-e", codeReq.Code)
+	case "php":
+		cmd = exec.Command("php", "-r", codeReq.Code)
 	default:
 		http.Error(w, "Unsupported language", http.StatusBadRequest)
 		return
