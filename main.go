@@ -7,7 +7,7 @@ import (
 	"github.com/NikhilParbat/CC-Compiler-Go/controllers"
 )
 
-func main() {
+func Main() {
 	// Define your route handlers
 	http.HandleFunc("/execute", controllers.ExecuteCodeHandler)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -17,7 +17,4 @@ func main() {
 	// Start the server with the CORS middleware
 	fmt.Println("Server listening on port 5000...")
 	http.ListenAndServe(":5000", nil)
-}
-func Handler() {
-	main()
 }
