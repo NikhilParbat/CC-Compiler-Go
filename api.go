@@ -24,7 +24,8 @@ func cors(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func main() {
+func init() {
 	// Start the serverless function
 	http.HandleFunc("/execute", cors(Handler))
+	http.ListenAndServe(":8080", nil)
 }
