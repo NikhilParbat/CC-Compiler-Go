@@ -7,14 +7,17 @@ import (
 	"github.com/NikhilParbat/CC-Compiler-Go/controllers"
 )
 
-func main() {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	// Define your route handlers
-	http.HandleFunc("/execute", controllers.ExecuteCodeHandler)
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	switch r.URL.Path {
+	case "/execute":
+		controllers.ExecuteCodeHandler(w, r)
+	default:
 		fmt.Fprintln(w, "Hello!")
-	})
+	}
+}
 
-	// Start the server with the CORS middleware
-	fmt.Println("Server listening on port 5000...")
-	http.ListenAndServe(":5000", nil)
+func main() {
+	// Start the serverless function
+	http.HandleFunc("/", Handler)
 }
