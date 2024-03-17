@@ -1,22 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "./api.go",
-      "use": "@vercel/go"
+  "build": {
+    "env": {
+      "GO_BUILD_FLAGS": "-ldflags '-s -w'"
     }
-  ],
-  "env": {
-    "GO_BUILD_FLAGS": "-ldflags '-s -w'"
-  },
-  "headers": [
-    {
-      "source": "/execute",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
-      ]
-    }
-  ]
+  }
 }
