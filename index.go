@@ -12,8 +12,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	// Define your route handlers
 	switch r.URL.Path {
 	case "/execute":
-		fmt.Fprintln(w, "Hello!")
+		fmt.Fprintln(w, "Hello from Execute!")
 	default:
+		fmt.Fprintln(w, "Hello from Default!")
 		controllers.ExecuteCodeHandler(w, r)
 	}
 }
