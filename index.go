@@ -8,7 +8,7 @@ import (
 )
 
 // handler function to handle HTTP requests
-func handler(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	// Define your route handlers
 	switch r.URL.Path {
 	case "/execute":
@@ -33,5 +33,5 @@ func CORS(next http.HandlerFunc) http.HandlerFunc {
 
 func main() {
 	// Start the serverless function
-	http.HandleFunc("/", CORS(handler))
+	http.HandleFunc("/", CORS(Handler))
 }
