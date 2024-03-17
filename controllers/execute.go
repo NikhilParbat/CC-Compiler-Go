@@ -1,20 +1,18 @@
 package controllers
 
 import (
+	"encoding/json"
 	"net/http"
-	"os"
 	"os/exec"
 	"strings"
 
 	"github.com/NikhilParbat/CC-Compiler-Go/models"
-
-	"github.com/gin-gonic/gin"
 )
 
-func ExecuteCode(c *gin.Context) {
+func ExecuteCodeHandler(w http.ResponseWriter, r *http.Request) {
 	var codeReq models.CodeRequest
-	if err := c.BindJSON(&codeReq); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := json.NewDecoder(r.Body).Decode(&codeReq); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -31,13 +29,13 @@ func ExecuteCode(c *gin.Context) {
 	case "rb":
 		cmd = exec.Command("ruby", "-e", codeReq.Code)
 	default:
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Unsupported language"})
+		http.Error(w, "Unsupported language", http.StatusBadRequest)
 		return
 	}
 
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -45,10 +43,5 @@ func ExecuteCode(c *gin.Context) {
 		Output: string(output),
 		Error:  "",
 	}
-	c.JSON(http.StatusOK, response)
-
-	// Remove the temporary executable file if it exists
-	if _, err := os.Stat("./temp"); err == nil {
-		os.Remove("./temp")
-	}
+	json.NewEncoder(w).Encode(response)
 }
