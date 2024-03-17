@@ -7,6 +7,16 @@ import (
 	"github.com/NikhilParbat/CC-Compiler-Go/controllers"
 )
 
+func Handler(w http.ResponseWriter, r *http.Request) {
+	// Define your route handlers
+	switch r.URL.Path {
+	case "/execute":
+		fmt.Fprintln(w, "Hello!")
+	default:
+		controllers.ExecuteCodeHandler(w, r)
+	}
+}
+
 // CORS middleware function to set necessary headers
 func CORS(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -17,16 +27,6 @@ func CORS(next http.HandlerFunc) http.HandlerFunc {
 
 		// Continue with the next handler
 		next(w, r)
-	}
-}
-
-func Handler(w http.ResponseWriter, r *http.Request) {
-	// Define your route handlers
-	switch r.URL.Path {
-	case "/execute":
-		fmt.Fprintln(w, "Hello!")
-	default:
-		controllers.ExecuteCodeHandler(w, r)
 	}
 }
 
