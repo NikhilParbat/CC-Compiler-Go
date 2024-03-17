@@ -7,7 +7,8 @@ import (
 	"github.com/NikhilParbat/CC-Compiler-Go/controllers"
 )
 
-func Handler(w http.ResponseWriter, r *http.Request) {
+// handler function to handle HTTP requests
+func handler(w http.ResponseWriter, r *http.Request) {
 	// Define your route handlers
 	switch r.URL.Path {
 	case "/execute":
@@ -32,5 +33,5 @@ func CORS(next http.HandlerFunc) http.HandlerFunc {
 
 func main() {
 	// Start the serverless function
-	http.HandleFunc("/", CORS(Handler))
+	http.HandleFunc("/", CORS(handler))
 }
