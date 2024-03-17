@@ -6,10 +6,6 @@
       "use": "@vercel/go"
     }
   ],
-  "routes": [
-    { "src": "/execute", "dest": "/main.go" },
-    { "handle": "filesystem" }
-  ],
   "env": {
     "GO_BUILD_FLAGS": "-ldflags '-s -w'"
   },
