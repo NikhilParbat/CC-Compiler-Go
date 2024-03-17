@@ -18,3 +18,7 @@ func main() {
 	fmt.Println("Server listening on port 5000...")
 	http.ListenAndServe(":5000", nil)
 }
+
+func Handler() {
+	main()
+}
