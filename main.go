@@ -10,6 +10,9 @@ import (
 func main() {
 	// Define your route handlers
 	http.HandleFunc("/execute", controllers.ExecuteCodeHandler)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello!")
+	})
 
 	// Start the server with the CORS middleware
 	fmt.Println("Server listening on port 5000...")
