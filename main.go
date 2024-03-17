@@ -7,7 +7,7 @@ import (
 	"github.com/NikhilParbat/CC-Compiler-Go/controllers"
 )
 
-func Main() {
+func main() {
 	// Define your route handlers
 	http.HandleFunc("/execute", controllers.ExecuteCodeHandler)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
